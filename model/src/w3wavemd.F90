@@ -543,7 +543,7 @@ CONTAINS
          DTGA, DTG, DTGpre, DTRES,            &
          FAC, VGX, VGY, FACK, FACTH,          &
          FACX, XXX, REFLEC(4),                &
-         DELX, DELY, DELA, DEPTH, D50, PSIC
+         DELX, DELY, DELA, DEPTH, D50, PSIC, TANBETA
     REAL                     :: VSioDummy(NSPEC), VDioDummy(NSPEC), VAoldDummy(NSPEC)
     LOGICAL                  :: SHAVETOTioDummy
 #ifdef W3_SEC1
@@ -1451,6 +1451,22 @@ CONTAINS
         END IF
 #endif
         call print_memcheck(memunit, 'memcheck_____:'//' WW3_WAVE TIME LOOP 13')
+        !
+		    ! Compute slope-dependant depth-induced breaking coefficient
+		    !
+		    CALL W3OUTG ( VA, .FALSE., .FALSE., .FALSE. )
+		    DO JSEA=1, NSEAL
+		      CALL INIT_GET_ISEA(ISEA, JSEA)
+		      IX     = MAPSF(ISEA,1)
+		      IY     = MAPSF(ISEA,2)
+		      IF (LPDLIB) THEN
+			      TANBETA = -DDDX(1,JSEA)*COS(THM(JSEA)) - DDDY(1,JSEA)*SIN(THM(JSEA))
+			      BRCOEF(JSEA) = MAX(0.1,MIN(DBLE(SDBC1)*TANBETA,1.2))
+		      ELSE
+			      TANBETA = -DDDX(IY,IX)*COS(THM(JSEA)) - DDDY(IY,IX)*SIN(THM(JSEA))
+			      BRCOEF(JSEA) = MAX(0.1,MIN(DBLE(SDBC1)*TANBETA,1.2))
+		      ENDIF
+	      END DO
         !
 #ifdef W3_PDLIB
         IF (LPDLIB .and. FLSOU .and. FSSOURCE) THEN
