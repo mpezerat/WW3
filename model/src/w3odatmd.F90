@@ -321,7 +321,7 @@ MODULE W3ODATMD
   INTEGER                 :: NOUTP = -1, IOUTP = -1, IOSTYP = 1
   !
   INTEGER, PARAMETER      :: NOGRP = 10
-  INTEGER, PARAMETER      :: NGRPP = 20
+  INTEGER, PARAMETER      :: NGRPP = 21
   INTEGER, PARAMETER      :: DIMP = 15
   INTEGER                 :: NOGE(NOGRP)
   INTEGER                 :: NOTYPE

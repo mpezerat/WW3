@@ -318,11 +318,11 @@ CONTAINS
     !
     ! 3. Breaking coefficient
     !
-	  IF (FSLOPE) THEN
-      BRCOEF_LOC = MAX(0.1,MIN(BRCOEF(IX),1.2))
-	  ELSE
-	    BRCOEF_LOC = DBLE(SDBC1)
-	  END IF
+    IF (FSLOPE) THEN
+      BRCOEF_LOC = BRCOEF(IX)
+    ELSE
+      BRCOEF_LOC = DBLE(SDBC1)
+    END IF
     !
     ! 4. Estimate the breaking coefficient ------------------------------- /
     !
